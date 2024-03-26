@@ -4,12 +4,12 @@ import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ActiveMQSenderFromFile extends RouteBuilder {
+public class ActiveMQXMLSender extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        //I am going to read from a directory and push it to queue.
-        from("file:files/json")
+        //I am going to take xml file from this directory and send it to a queue
+        from("file:files/xml")
                 .log("${body}")
-                .to("activemq:activemq-json-queue");
+                .to("activemq:activemq-xml-queue");
     }
 }

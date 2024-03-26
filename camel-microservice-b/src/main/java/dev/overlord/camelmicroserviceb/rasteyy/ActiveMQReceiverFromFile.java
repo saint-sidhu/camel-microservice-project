@@ -12,18 +12,18 @@ import java.math.BigDecimal;
 @Component
 public class ActiveMQReceiverFromFile extends RouteBuilder {
 
-
-
     @Autowired
     private MyCurrencyExchangeProcessor myCurrencyExchangeProcessor;
     @Override
     public void configure() throws Exception {
-        from("activemq:activemq-file-queue")
-                .unmarshal().json(JsonLibrary.Jackson, CurrencyExchange.class)
+        from("activemq:activemq-json-queue")
+                .unmarshal()
+                .json(JsonLibrary.Jackson, CurrencyExchange.class)
                 .bean(myCurrencyExchangeProcessor)
                 .to("log:received-message-from-file-queue");
     }
 }
+@Component
 class MyCurrencyExchangeProcessor{
     private final Logger logger = LoggerFactory.getLogger(ActiveMQReceiverFromFile.class);
     public void processMessage(CurrencyExchange currencyExchange){
